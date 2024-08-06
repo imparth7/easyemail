@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+# .env file
+from dotenv import load_dotenv
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,10 +30,27 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',  # Your frontend development server
+]
+
+# Optionally, allow all origins (not recommended for production)
+# CORS_ALLOW_ALL_ORIGINS = True
+
+# To allow credentials (cookies, authorization headers, etc.)
+CORS_ALLOW_CREDENTIALS = True
+
+# If you need to allow specific headers
+CORS_ALLOW_HEADERS = [
+    'content-type',
+    'authorization',
+    # Add other headers if needed
+]
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +60,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -121,3 +143,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+load_dotenv()
+# Email Sending
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587 # <- local | # live -> 465
+EMAIL_HOST_USER = os.getenv("EMAIL")
+EMAIL_HOST_PASSWORD = os.getenv("PASSWD")
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
