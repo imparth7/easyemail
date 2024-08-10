@@ -51,6 +51,7 @@ CORS_ALLOW_HEADERS = [
 
 INSTALLED_APPS = [
     'corsheaders',
+    'keycipher',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -148,8 +149,8 @@ load_dotenv()
 # Email Sending
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587 # <- local | # live -> 465
-EMAIL_HOST_USER = os.getenv("EMAIL")
-EMAIL_HOST_PASSWORD = os.getenv("PASSWD")
+# EMAIL_HOST_USER = os.getenv("EMAIL")
+# EMAIL_HOST_PASSWORD = os.getenv("PASSWD")
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
